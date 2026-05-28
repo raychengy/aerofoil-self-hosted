@@ -1,0 +1,36 @@
+services:
+  aerofoil:
+    container_name: aerofoil
+    image: luketanti/aerofoil:2.5
+    restart: unless-stopped
+    environment:
+      # For write permission in config directory
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      # to create/update an admin user at startup
+      - USER_ADMIN_NAME=${USER_ADMIN_NAME}
+      - USER_ADMIN_PASSWORD=${USER_ADMIN_PASSWORD}
+      # to create/update a regular user at startup
+      - USER_GUEST_NAME=${USER_GUEST_NAME}
+      - USER_GUEST_PASSWORD=${USER_GUEST_PASSWORD}
+      # cache TTLs (seconds): use none/unset for rebuild-only
+      # - SHOP_SECTIONS_CACHE_TTL_S=none
+      # - MEDIA_INDEX_TTL_S=none
+    volumes:
+      - /volume1/nsw:/games:ro
+      - /volume1/docker/aerofoil/config:/app/config
+      - /volume1/docker/aerofoil/data:/app/data
+    networks:
+      aerofoil_net:
+        ipv4_address: ${AEROFOIL_IP:-192.168.1.200}
+
+networks:
+  aerofoil_net:
+    driver: macvlan
+    driver_opts:
+      parent: ${AEROFOIL_PARENT:-eth0}
+    ipam:
+      config:
+        - subnet: ${AEROFOIL_SUBNET:-192.168.1.0/24}
+          gateway: ${AEROFOIL_GATEWAY:-192.168.1.1}
+          ip_range: ${AEROFOIL_IP:-192.168.1.200}/32

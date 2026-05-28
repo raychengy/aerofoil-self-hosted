@@ -1,0 +1,2 @@
+# Ignore actual environment file to prevent committing secrets
+.env
