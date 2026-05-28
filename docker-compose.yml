@@ -17,7 +17,7 @@ services:
       # - SHOP_SECTIONS_CACHE_TTL_S=none
       # - MEDIA_INDEX_TTL_S=none
     volumes:
-      - /volume1/nsw:/games:ro
+      - /volume1/nsw:/games
       - /volume1/docker/aerofoil/config:/app/config
       - /volume1/docker/aerofoil/data:/app/data
     networks:

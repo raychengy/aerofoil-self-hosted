@@ -21,5 +21,4 @@ This repository contains the configuration to self-host Aerofoil using Docker Co
 
 ## Security Notes
 
-- The game directory is mounted as read-only (`:ro`) to prevent accidental modifications to your media.
 - Do not commit your `.env` file to version control, as it contains your passwords.
